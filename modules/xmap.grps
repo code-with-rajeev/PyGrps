@@ -1,0 +1,10 @@
+
+
+--encoder of grapes--
+import_ encoder        --encoder.py of python on GRPS--
+fun encode(data)//
+    new = encoder.encode(data)
+    // new            --return value--
+fun decode(data)//
+    new = encoder.decode(data)
+    // new            --return value--

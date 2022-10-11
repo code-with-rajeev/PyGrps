@@ -1,0 +1,6 @@
+import_ grps_connector
+value = grps_connector.connector
+IF value() == None:
+    show("wan't to reconncect")
+    x = INPUT()
+    show(x)

@@ -1,0 +1,28 @@
+
+--Random function --
+
+import_ os
+
+fun get_bits(k)//
+        k = k.bit_length()
+        numbytes = (k + 7) _/ 8                       -- bits / 8 and rounded up--
+        x = int.from_bytes(os.urandom(numbytes) , "big")
+        //x >> (numbytes * 8 -k )
+
+fun random(k)//
+    value = k + 1
+    WHILE NOT value < k:
+        value = get_bits(k)
+        END
+    //value
+
+fun rand_range(a,b)//
+    x = 1
+    result = b+1
+    WHILE x == 1:
+        result = get_bits(b+1)
+        IF result < b AND result > a-1:
+            x = 0 END
+        END
+    //result
+    
