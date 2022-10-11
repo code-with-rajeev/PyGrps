@@ -2,7 +2,7 @@
 This language is user-friendly and you can do your various task just by writing small and cool codes.
 Sorry, due to time constraints I'm not able to upload it's tutorial.
 
-How to run this programming language?
+How to his programming language?
 
 for running - run "test.py"
 best if you have Tkinter installed.
