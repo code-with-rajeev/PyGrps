@@ -199,10 +199,11 @@ tests.append(test8_0)
 
 test9_0 = "FOR i in (8,9):;show(i);END"
 
-test9_1 = "import_ random_; show(rand_range(2,7))"
-print(runner(test9_1))
+test9_1 = "import_ random_; 
 
-"""
+
+# Testing all basic scripts 
+
 import time
 for i in tests:
     print(f"\n\n\n\nrunning script:\n{i}")
@@ -210,4 +211,3 @@ for i in tests:
     print(f"Output deteted")
     print(f"{runner(i)}")
     time.sleep(2)
-"""
