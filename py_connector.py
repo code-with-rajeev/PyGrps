@@ -16,8 +16,8 @@ def connector(user,password):
     print("connecting grps to Mysql \n This may take a while...")
     time.sleep(1)
     x = None
-    user_ = "Rajeev"#input("please enter your User_name: ")
-    password_ = "Rajeevbro420@"#input("please enter your password: ")
+    user_ = "username"#input("please enter your User_name: ")
+    password_ = "password"#input("please enter your password: ")
     x = a.connect(user = user_,password = password_)
     try:
         x = a.connect(user = user_, password = password_)
