@@ -226,9 +226,9 @@ show(s1 + '; ' + s2)              -- Hello GRPS; Hello World
 
 ### Control Flow
 
-#### IF-ELSE conditions
+#### IF - ELSE conditions
 ```pygrs
-Mangoes = "yellow"
+Mangoes = "Yellow"
 
 IF Mangoes == 'Red':
     show('Red')
@@ -237,6 +237,110 @@ ELIF Mangoes == 'Green':
 ELSE :
     show('I love Mangoes ❤')
 ```
+> Output: `I love Mangoes ❤`
+
+#### Inline conditions
+```pygrs
+Mangoes = "Yellow"
+
+IF Mangoes == 'Yellow' THEN show('Mangoes are Yellow')
+```
+> Output: `Mangoes are Yellow`
+
+---
+
+### FOR loop
+
+#### Syntax
+```pygrs
+colors = ['red', 'yellow', 'green','blue']
+
+FOR color in colors:
+    show(color)
+    END
+```
+#### Output: 
+`
+red
+yellow
+green
+blue
+`
+#### Start Pattern
+```pygrs
+list = range(1,6) -- a list of integer
+
+FOR i in list:
+    show('*' * i)
+    END
+```
+#### Output: 
+`
+*
+**
+***
+****
+*****
+`
+---
+
+### WHILE loop
+
+#### Syntax
+```pygrs
+i = 3
+WHILE i > 0 :
+    show(i)
+    i = i-1
+    END
+```
+#### Output: 
+`
+3
+2
+1
+`
+---
+
+### FUNTION: fun
+
+#### Syntax
+```pygrs
+fun add(a ,b)//
+    ans = a+b
+    // ans
+
+x = add(10,20)
+show(x)
+```
+#### Output: 
+`
+30
+`
+---
+
+### Importing modules
+
+#### Syntax example
+```pygrs
+import_ random
+-- Generate two random numbers --
+a = random.randrange(10,50) 
+b = random.randrange(10,50)
+show(a)
+show(b)
+```
+#### Output: 
+`
+29
+45
+`
+> Note: This random module was written in .grps Extension
+
+### Classes and Objects
+> Documentation pending
+
+---
 
 > ✅ **Next Sections** (To Be Added):
 >
