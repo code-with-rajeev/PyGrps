@@ -210,18 +210,20 @@ parts = text.split(',')           -- ['a', 'b', 'c']
 joined = '*'.join(parts)
 show(joined)                      -- a*b*c
 ```
-
+#### Output:
+> ['a', 'b', 'c']
+> a*b*c
 ---
 
 #### Strip & Replace
 
 ```pygrps
-s = '   Hello GRPS   '
-s1 = s.strip()                    -- 'Hello GRPS'
-s2 = s.replace('GRPS', 'World')
-show(s1 + '; ' + s2)              -- Hello GRPS; Hello World
+s = '   "Hello GRPS"   '
+s1 = s.strip()                    -- remove whitespace
+s2 = s.replace('GRPS', 'World')   -- replace sub-string
+show(s1 + 'changed to ' + s2)
 ```
-
+> Output: "Hello GRPS" changed to "Hello World"
 ---
 
 ### Control Flow
@@ -275,16 +277,16 @@ FOR i in list:
     END
 ```
 #### Output: 
-`
+```
 *
 **
 ***
 ****
 *****
-`
+````
 ---
 
-### WHILE loop
+### WHILE loop:
 
 #### Syntax
 ```pygrs
@@ -295,11 +297,11 @@ WHILE i > 0 :
     END
 ```
 #### Output: 
-`
+```
 3
 2
 1
-`
+```
 ---
 
 ### FUNTION: fun
@@ -314,9 +316,9 @@ x = add(10,20)
 show(x)
 ```
 #### Output: 
-`
+```
 30
-`
+```
 ---
 
 ### Importing modules
