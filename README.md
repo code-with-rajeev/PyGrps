@@ -1,5 +1,4 @@
-# PyGrps: A Python-based Programming Language with Simplified Syntax
-
+# PyGrps: A Python-based Fun Programming Language
 <p align="center">
   <img src="https://example.com/pygrps-logo.png" alt="PyGrps Logo">
 </p>
@@ -8,13 +7,13 @@ PyGrps is a programming language developed using Python, designed to provide a s
 
 ## Features
 
-- **Easy Syntax**: PyGrps offers a simplified syntax that reduces the learning curve and makes programming more accessible to beginners.
+- **Easy Syntax**: PyGrps offers a simplified syntax that reduces the learning curve.
 
 - **Python Compatibility**: PyGrps is built on Python, allowing seamless integration with existing Python code and libraries.
 
-- **Basic Programming**: PyGrps provides support for essential programming concepts such as variables, conditionals, loops, functions, and input/output operations.
+- **Core Concepts**: Supports many core concepts like variables, datatype, conditional statements, FOR loop, WHIILE loop, functions, keywords (20+), modules (random, maths etc.), in-built modules (100+), PYTHON module support and much more.
 
-- **.grps Extension**: PyGrps uses the .grps extension for its source code files, making it easy to identify and differentiate Grps files from regular Python files.
+- **.grps Extension**: Special .grps extension for PyGrps programs
 
 ## Installation
 
@@ -35,7 +34,8 @@ best if you have Tkinter installed.
 
 1. [Basics](#basics)
 2. [Print Statement](#print-statement)
-3. [Data Types](#data-types)
+3. [Basic Operation](#print-statement)
+4. [Data Types](#data-types)
 
    * [Number](#number)
    * [String](#string)
@@ -62,8 +62,6 @@ best if you have Tkinter installed.
 
 * **Keyword**: `show()`
 * **Arguments**:
-
-  * Max: 1
   * Type: Expression or Identifier
 
 ### Example:
@@ -81,9 +79,9 @@ True
 
 ---
 
-## 🧠 Data Types
+## Data Types
 
-### 🔢 Number
+### Number
 
 ```pygrps
 VAR = 10
@@ -130,7 +128,7 @@ lool
 
 ### 🔗 Operations
 
-* **Concatenation (********`+`****\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*)**:
+* **Concatenation**:
 
 ```pygrps
 greet = 'hello ' + 'World!'
@@ -139,7 +137,7 @@ show(greet)
 
 > Output: `hello World!`
 
-* **Repetition (********`*`****\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*)**:
+* **Repetition**:
 
 ```pygrps
 text = 'Well '
