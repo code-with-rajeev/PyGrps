@@ -105,7 +105,7 @@ GRPS OBJ <class 'int'>
 
 ---
 
-### 🌤️ String
+### ➡️ String
 
 #### Datatype:
 ```
@@ -173,19 +173,19 @@ show(STR.endswith('WORLD'))   -- Output: True
 
 ---
 
-#### 👁️ Case Conversion
+#### ➡️ Case Conversion
 
 ```pygrps
 txt = 'hEllo PYgrps'
 
-show(txt.lower())      # hello pygrps
-show(txt.upper())      # HELLO PYGRPS
-show(txt.capitalize()) # Hello pygrps
-show(txt.title())      # Hello Pygrps
-show(txt.swapcase())   # HeLLO pyGRPS
+show(txt.lower())      -- hello pygrps
+show(txt.upper())      -- HELLO PYGRPS
+show(txt.capitalize()) -- Hello pygrps
+show(txt.title())      -- Hello Pygrps
+show(txt.swapcase())   -- HeLLO pyGRPS
 ```
 
-#### ✔️ Character Checks
+#### ✅ Character Checks
 
 ```pygrps
 s = 'Python3'
@@ -223,6 +223,20 @@ show(s1 + '; ' + s2)              -- Hello GRPS; Hello World
 ```
 
 ---
+
+### Control Flow
+
+#### IF-ELSE conditions
+```pygrs
+Mangoes = "yellow"
+
+IF Mangoes == 'Red':
+    show('Red')
+ELIF Mangoes == 'Green':
+    show('Green')
+ELSE :
+    show('I love Mangoes ❤')
+```
 
 > ✅ **Next Sections** (To Be Added):
 >
