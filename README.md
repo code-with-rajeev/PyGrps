@@ -46,21 +46,26 @@ best if you have Tkinter installed.
 
 ---
 
-## 🧹 Basics
+## Basics
 
-* `;` – Acts as a **newline separator**
+* `;` - **newline separator**
   Optional (like Python), but required in **inline multiple statements**.
 
 * **Comments**:
 
-  * Inline: `-- comment --`
-  * Multi-line: `--- multi-line comment ---`
+```pygrps
+-- This is inline-comment --
 
+---
+This is
+multi-line comment
+---
+```
 ---
 
 ## 🔨 Print Statement
 
-* **Keyword**: `show()`
+* **in-built method**: `show()`
 * **Arguments**:
   * Type: Expression or Identifier
 
@@ -68,7 +73,7 @@ best if you have Tkinter installed.
 
 ```pygrps
 a, b = 2, 4
-show((a + b)^2 == (a^2 + b^2 + 2*(a * b)))
+show( (a + b)^2 == (a^2 + b^2 + 2*(a * b)) )
 ```
 
 #### Output:
@@ -84,13 +89,17 @@ True
 ### Number
 
 ```pygrps
-VAR = 10
-show(type(VAR))
+-- Inline declaration --
+a, b = 2, 8
+
+show(x^y)
+show(type(a))
 ```
 
 #### Output:
 
 ```
+256
 GRPS OBJ <class 'int'>
 ```
 
@@ -98,37 +107,32 @@ GRPS OBJ <class 'int'>
 
 ### 🌤️ String
 
-```pygrps
-VAR = 'can you find x'
-show(type(VAR))
-```
-
-#### Output:
-
+#### Datatype:
 ```
 GRPS OBJ <class 'str'>
 ```
 
----
-
 #### 🧪 Slicing
 
+##### STR[start:stop:skip] all these parameters are optional.
+
+
 ```pygrps
-STR = "helloworld"
-show(STR[2::2])
+STR = "_h_e_l_l_o_ _w_o_r_l_d_"
+show(STR[1::2])
 ```
 
 #### Output:
 
 ```
-lool
+hello world
 ```
 
 ---
 
 ### 🔗 Operations
 
-* **Concatenation**:
+#### Concatenation:
 
 ```pygrps
 greet = 'hello ' + 'World!'
@@ -137,7 +141,7 @@ show(greet)
 
 > Output: `hello World!`
 
-* **Repetition**:
+#### Repetition:
 
 ```pygrps
 text = 'Well '
@@ -181,8 +185,6 @@ show(txt.title())      # Hello Pygrps
 show(txt.swapcase())   # HeLLO pyGRPS
 ```
 
----
-
 #### ✔️ Character Checks
 
 ```pygrps
@@ -200,7 +202,7 @@ show('123'.isdecimal()) -- True
 
 ---
 
-#### 🧹 Split & Join
+#### Split & Join
 
 ```pygrps
 text = 'a,b,c'
@@ -211,7 +213,7 @@ show(joined)                      -- a*b*c
 
 ---
 
-#### 🩼 Strip & Replace
+#### Strip & Replace
 
 ```pygrps
 s = '   Hello GRPS   '
