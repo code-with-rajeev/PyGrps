@@ -3,15 +3,15 @@
   <img src="https://example.com/pygrps-logo.png" alt="PyGrps Logo">
 </p>
 
-PyGrps is a programming language developed using Python, designed to provide a simplified syntax for easier programming. It aims to offer a beginner-friendly approach while maintaining the power and versatility of Python.
+PyGrps is a fun, simplified Python-based language with easy syntax for beginners.
 
 ## Features
 
-- **Easy Syntax**: PyGrps offers a simplified syntax that reduces the learning curve.
+- **Easy Syntax**: offers simplified syntax, reducing the learning curve.
 
-- **Python Compatibility**: PyGrps is built on Python, allowing seamless integration with existing Python code and libraries.
+- **Python Compatibility**: seamless integration with existing Python libraries.
 
-- **Core Concepts**: Supports many core concepts like variables, datatype, conditional statements, FOR loop, WHIILE loop, functions, keywords (20+), modules (random, maths etc.), in-built modules (100+), PYTHON module support and much more.
+- **Core Concepts**: like variables, datatype, IF-ELSE, FOR loop, WHIILE loop, functions, keywords (20+), in-built modules (100+), PYTHON module and OOPs support.
 
 - **.grps Extension**: Special .grps extension for PyGrps programs
 
@@ -43,6 +43,17 @@ best if you have Tkinter installed.
      * [Slicing](#slicing)
      * [Operations](#operations)
      * [Methods](#methods)
+   * [List](#string)
+
+     * [Slicing](#slicing)
+     * [Operations](#operations)
+     * [Methods](#methods)
+   * [Control Flow](#control-flow)
+   * [For Loop](#for-loop)
+   * [While Loop](#while-loop)
+   * [Function](#function)
+   * [Built-in Modules](#in-built modules)
+   * [Object-Oriented Programming](#oops)
 
 ---
 
@@ -211,8 +222,10 @@ joined = '*'.join(parts)
 show(joined)                      -- a*b*c
 ```
 #### Output:
-> ['a', 'b', 'c']
-> a*b*c
+```
+['a', 'b', 'c']
+a*b*c
+```
 ---
 
 #### Strip & Replace
@@ -346,9 +359,6 @@ show(b)
 
 > ✅ **Next Sections** (To Be Added):
 >
-> * Control Flow (if/else)
-> * Loops (for, while)
-> * Functions
 > * Error Handling
 > * Custom Features / Built-in Modules
 > * Real Project Examples
