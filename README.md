@@ -28,10 +28,207 @@ To use PyGrps, follow these steps:
 
 ## How to use this programming language?
 
-for running - run "test.py"
+for running - run "grps.py"
 best if you have Tkinter installed.
- 
-## suggestions
-- for testing all cases.
-run "test_programm.py"
 
+## 📚 Table of Contents
+
+1. [Basics](#basics)
+2. [Print Statement](#print-statement)
+3. [Data Types](#data-types)
+
+   * [Number](#number)
+   * [String](#string)
+
+     * [Slicing](#slicing)
+     * [Operations](#operations)
+     * [Methods](#methods)
+
+---
+
+## 🧹 Basics
+
+* `;` – Acts as a **newline separator**
+  Optional (like Python), but required in **inline multiple statements**.
+
+* **Comments**:
+
+  * Inline: `-- comment --`
+  * Multi-line: `--- multi-line comment ---`
+
+---
+
+## 🔨 Print Statement
+
+* **Keyword**: `show()`
+* **Arguments**:
+
+  * Max: 1
+  * Type: Expression or Identifier
+
+### Example:
+
+```pygrps
+a, b = 2, 4
+show((a + b)^2 == (a^2 + b^2 + 2*(a * b)))
+```
+
+#### Output:
+
+```
+True
+```
+
+---
+
+## 🧠 Data Types
+
+### 🔢 Number
+
+```pygrps
+VAR = 10
+show(type(VAR))
+```
+
+#### Output:
+
+```
+GRPS OBJ <class 'int'>
+```
+
+---
+
+### 🌤️ String
+
+```pygrps
+VAR = 'can you find x'
+show(type(VAR))
+```
+
+#### Output:
+
+```
+GRPS OBJ <class 'str'>
+```
+
+---
+
+#### 🧪 Slicing
+
+```pygrps
+STR = "helloworld"
+show(STR[2::2])
+```
+
+#### Output:
+
+```
+lool
+```
+
+---
+
+### 🔗 Operations
+
+* **Concatenation (********`+`****\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*)**:
+
+```pygrps
+greet = 'hello ' + 'World!'
+show(greet)
+```
+
+> Output: `hello World!`
+
+* **Repetition (********`*`****\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*)**:
+
+```pygrps
+text = 'Well '
+show(text * 3)
+```
+
+> Output: `Well Well Well`
+
+---
+
+### 🛠️ Methods
+
+#### 🔍 Search Methods
+
+```pygrps
+STR = 'can you find x here'
+show(STR.find('x'))           -- Output: 13
+
+STR = 'a b c a b c'
+show(STR.rfind('b'))          -- Output: 8
+
+STR = 'apple app pple '
+show(STR.count('app'))        -- Output: 2
+
+STR = 'HELLOWORLD'
+show(STR.startswith('HELLO')) -- Output: True
+show(STR.endswith('WORLD'))   -- Output: True
+```
+
+---
+
+#### 👁️ Case Conversion
+
+```pygrps
+txt = 'hEllo PYgrps'
+
+show(txt.lower())      # hello pygrps
+show(txt.upper())      # HELLO PYGRPS
+show(txt.capitalize()) # Hello pygrps
+show(txt.title())      # Hello Pygrps
+show(txt.swapcase())   # HeLLO pyGRPS
+```
+
+---
+
+#### ✔️ Character Checks
+
+```pygrps
+s = 'Python3'
+
+show(s.isalpha())       -- False
+show(s.isdigit())       -- False
+show(s.isalnum())       -- True
+show(' '.isspace())     -- True
+show(s.isupper())       -- False
+show(s.istitle())       -- True
+show('123'.isnumeric()) -- True
+show('123'.isdecimal()) -- True
+```
+
+---
+
+#### 🧹 Split & Join
+
+```pygrps
+text = 'a,b,c'
+parts = text.split(',')           -- ['a', 'b', 'c']
+joined = '*'.join(parts)
+show(joined)                      -- a*b*c
+```
+
+---
+
+#### 🩼 Strip & Replace
+
+```pygrps
+s = '   Hello GRPS   '
+s1 = s.strip()                    -- 'Hello GRPS'
+s2 = s.replace('GRPS', 'World')
+show(s1 + '; ' + s2)              -- Hello GRPS; Hello World
+```
+
+---
+
+> ✅ **Next Sections** (To Be Added):
+>
+> * Control Flow (if/else)
+> * Loops (for, while)
+> * Functions
+> * Error Handling
+> * Custom Features / Built-in Modules
+> * Real Project Examples
