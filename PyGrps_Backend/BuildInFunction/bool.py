@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Oct 15 17:03:46 2020
-
-@author: ACER
-"""
 from RTresult import RTResult
 from BaseFunction import Temp,String,List,Number,BaseFunction,Bool,None_
 from Errors import RTError

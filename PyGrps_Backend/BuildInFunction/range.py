@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Oct 27 13:42:33 2020
-
-@author: ACER
-"""
 from RTresult import RTResult
 from BaseFunction import Temp,String,List,Number,BaseFunction,Bool,Class
 from Errors import RTError
@@ -24,6 +18,6 @@ def module(exec_ctx,pos,end):
     except Exception as a:
       return RTResult().failure(RTError(
         pos,end,
-        f"{a} \n don't be sad:(",
+        f"{a} , Please resolve this.",
         exec_ctx
       ))

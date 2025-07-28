@@ -1,22 +1,17 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Oct 13 10:29:34 2020
-
-@author: ACER
-"""
-
-
 from RTresult import RTResult
 from BaseFunction import Temp,String,List,Number,BaseFunction
 from Errors import RTError
+from Context import Context
+from GlobalSymbolTable import SymbolTable
 
-def module(ctx ,pos,end):
+def module(exec_ctx,pos,end):
     try:
-        is_number = isinstance(ctx.symbol_table.get("value"), Number)
-        return RTResult().success(Number.true if is_number else Number.false)
+        value = exec_ctx.symbol_table.get("value")
+        return RTResult().success(Number(abs(value.value)))
     except Exception as a:
       return RTResult().failure(RTError(
         pos,end,
         "Expected int type object only :(",
         exec_ctx
       ))
+    
