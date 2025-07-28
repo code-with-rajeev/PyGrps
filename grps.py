@@ -1,12 +1,3 @@
-#24.5 kb base func 723 lines  24.2 kb 723 }} 682 23.1    691   23.4 {}
-#1612  63.2  1590 66  {}
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Aug 11 17:08:59 2020
-
-@author: ACER
-"""
-
 from tokens import *
 from BaseFunction import *
 from Errors import *
@@ -1555,14 +1546,6 @@ class BuiltInFunction(BaseFunction):
     to_print = []
     to_print += [f">>  {str(repr(exec_ctx.symbol_table.get('value')))}"]
     """
-
- #   for symbol in exec_ctx.symbol_table.symbols:
- #       symbol = exec_ctx.symbol_table.get(symbol)
- #       print(symbol,type(symbol).__name__)
-  #      if type(symbol).__name__ == "Identifier":
-##            i = Interpreter()
-#            print(i.visit(symbol,exec_ctx))
-     #       print(self.symbol_table)
     print(f">>  {str(repr(exec_ctx.symbol_table.get('value')))}")
     return RTResult().success(Number.null)
   execute_print.arg_names = ['value']
@@ -1698,6 +1681,7 @@ def run(fn, text ,self_ = None):
         return result.value , result.error
     else:
         return None,None
+
 def start_normal(dir_ = None,file = "untitled",text = None):
     while True:
         text = input(">> ")
@@ -1712,6 +1696,7 @@ def start_normal(dir_ = None,file = "untitled",text = None):
             else:
                 print(f"None")
         START,END = 0,0
+
 def start_GUI(dir_ = None,file = "untitled",text = None):
         print(f"running....  file_name = {file}.grps \nat wdir = {dir_}")
         result , error = run(file,text)
@@ -1721,45 +1706,6 @@ def start_GUI(dir_ = None,file = "untitled",text = None):
             return to_print,f"\nsuccess \n  completed in "
 def all_():
     return global_symbol_table.view()
+
 if __name__ == "__main__":
-    self_ = True
- #   test = "class a: ; fun __init__(self)//;self.d = 45;//;END;show(a().d)"
- #   test= 'import_ xmap ; xmap.change("44") '
-    x,y = run("SAdfa",'x,my = 6,7')
-    if x:
-        print(x)
-    else:
-        if y: 
-            print(y.show_error())
-        else:
-            print("pass")
-'''
-        start_value = res.register(self.visit(node.start_value_node, context))
-        if res.error: return res
-        end_value = res.register(self.visit(node.end_value_node, context))
-        if res.error: return res
-        if node.step_value_node:
-            step_value = res.register(self.visit(node.step_value_node, context))
-            if res.error: return res
-        else:
-            step_value = Number(1)
-        i = start_value.value
-        if step_value.value >= 0:
-            condition = lambda: i < end_value.value
-        else:
-            condition = lambda: i > end_value.value
-        while condition():
-            context.symbol_table.set(node.var_name_tok.value, Number(i))
-            i += step_value.value
-            res.register(self.visit(node.body_node, context))
-            if res.error: return res
-        return res.success(None)
-''' 
-"""
-        mode = None
-        if type_:
-            mode = "make_equal"
-        return RTResult().success(
-            Temp(Temp(node).arrange(node,mode,Interpreter())).set_context(context).set_pos(node.pos_start, node.pos_end)
-        )
-"""
+    start_normal()
