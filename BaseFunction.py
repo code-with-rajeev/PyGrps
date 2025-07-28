@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Oct  9 13:25:02 2020      #lAST MODIFIED 19 jan 723 LINES 24.7KB
-
-@author: ACER
-"""
 from Context import Context
 from GlobalSymbolTable import SymbolTable
 from RTresult import RTResult
@@ -74,11 +68,13 @@ class Value:
 
     def is_true(self):
         return False
+
     def __all__(self):
         __all__ = self.__dict__
         for name,value in self.__class__.__dict__.items():
             __all__[name] = value
         return Number(__all__), None
+
     def illegal_operation(self, other=None):
         if not other: other = self
         return RTError(
@@ -86,16 +82,17 @@ class Value:
             'Illegal operation',
             self.context
         )
-class Module(Value):
-    def __init__(self, value):
 
+class Module(Value):
+
+    def __init__(self, value):
         super().__init__()
         self.value = value
         
-    def copy(self,z = None):
+    def copy(self,other = None):
         copy = Module(self.value)
-        if z:
-            copy = z
+        if other:
+            copy = other
         copy.set_pos(self.pos_start, self.pos_end)
         copy.set_context(self.context)
         return copy
@@ -105,9 +102,10 @@ class Module(Value):
     
     def __repr__(self):
         return str(self.value)
-class None_(Value):
-    def __init__(self, value):
 
+class None_(Value):
+
+    def __init__(self, value):
         super().__init__()
         self.value = value
         
@@ -116,17 +114,21 @@ class None_(Value):
         copy.set_pos(self.pos_start, self.pos_end)
         copy.set_context(self.context)
         return copy
+
     def type_(self):
         return Class(None).set_context(self.context), None
+
     def is_true(self):
         return self.value != 0
+
     def get_comparison_eq(self, other):
             return Bool(str(self.value == other.value)).set_context(self.context), None
+    
     def __repr__(self):
         return str(self.value)
+
 class Iterable(Value):
     def __init__(self, value):
-
         super().__init__()
         self.value = value
         
@@ -144,37 +146,41 @@ class Iterable(Value):
 
 class Bool(Value):
     def __init__(self, value):
-
         super().__init__()
         self.value = value
+
     def get_comparison_eq(self, other):
             return Bool(str(self.value == other.value)).set_context(self.context), None
+    
     def copy(self):
         copy = Bool(self.value)
         copy.set_pos(self.pos_start, self.pos_end)
         copy.set_context(self.context)
         return copy
+    
     def anded_by(self,other):
         if isinstance(other, Bool):
-            print("treat",self.value,other.value,str(self.value and other.value))
             return Bool(str(self.value == "True" and other.value == "True")).set_context(self.context), None
         else:
             return None, Value.illegal_operation(self, other)
+    
     def notted(self):
-        print()
         if isinstance(self, Bool):
             return Bool(str(True if self.value == "False" else False)).set_context(self.context), None
         else:
             return None, Value.illegal_operation(self, other)
+    
     def is_true(self):
         return True if self.value == "True" else False
+    
     def type_(self):
         return Class(bool).set_context(self.context), None
+    
     def __repr__(self):
         return str(self.value)
+
 class Number(Value):
     def __init__(self, value):
-
         super().__init__()
         self.value = value
 
@@ -197,11 +203,13 @@ class Number(Value):
             return String(self.value * other.value).set_context(self.context), None
         else:
             return None, Value.illegal_operation(self, other)
+
     def right_shift(self, other):
         if isinstance(other, Number):
             return Number(self.value >> other.value).set_context(self.context), None
         else:
             return None, Value.illegal_operation(self, other)
+
     def left_shift(self, other):
         if isinstance(other, Number):
             return Number(self.value << other.value).set_context(self.context), None
@@ -216,10 +224,10 @@ class Number(Value):
                     'Division by zero',
                     self.context
                 )
-
             return Number(self.value / other.value).set_context(self.context), None
         else:
             return None, Value.illegal_operation(self, other)
+
     def rdived_by(self, other):
         if isinstance(other, Number):
             if other.value == 0:
@@ -232,6 +240,7 @@ class Number(Value):
             return Number(self.value // other.value).set_context(self.context), None
         else:
             return None, Value.illegal_operation(self, other)
+
     def powed_by(self, other):
         if isinstance(other, Number):
             return Number(self.value ** other.value).set_context(self.context), None
@@ -243,25 +252,25 @@ class Number(Value):
 
     def get_comparison_ne(self, other):
             return Bool(str(self.value != other.value)).set_context(self.context), None
+    
     def get_unpack(self, other):
             self.list = []
             if type(self.value) == int or type(self.value) == str:
                 self.value = [self.value]
             self.value.append(other.value)
             return Number(self.value).set_context(self.context), None
+    
     def makeequal(self,other):
         return Number([self.value,other.value]).set_context(self.context), None
+    
     def get_comparison_lt(self, other):
-        print(self.value,other.value)
-        if isinstance(other, Number):
-            
+        if isinstance(other, Number):            
             return Bool(str(self.value < other.value)).set_context(self.context), None
         else:
             return None, Value.illegal_operation(self, other)
 
     def get_comparison_gt(self, other):
         if isinstance(other, Number): 
-            print("true",str(self.value > other.value))
             return Bool(str(self.value > other.value)).set_context(self.context), None
         else:
             return None, Value.illegal_operation(self, other)
@@ -280,11 +289,13 @@ class Number(Value):
 
     def anded_by(self, other):
             return Number(int(self.value and other.value)).set_context(self.context), None
+    
     def ored_by(self, other):
             return Number(int(self.value or other.value)).set_context(self.context), None
 
     def type_(self):
         return Class(int).set_context(self.context), None
+
     def copy(self, z = None):
         copy = Number(self.value)
         copy.set_pos(self.pos_start, self.pos_end)
@@ -302,6 +313,7 @@ class List(Value):
     super().__init__()
     self.elements = elements
     self.value = elements
+
   def type_(self):
       return Class(list).set_context(self.context), None
   def added_to(self, other):
@@ -326,14 +338,16 @@ class List(Value):
       print(type(other))
       new_list.append(other.value)
       return List(new_list).set_context(self.context), None
+  
   def pop(self):
       new_list = self.value
       removed  = new_list.pop()
       return removed.set_context(self.context), None
+  
   def get_comparison_eq(self, other):
       return List.equal(self,other)
+  
   def equal(first ,other):       
-
        if len(first.value) == len(other.value):
            for i in range(len(first.value)):
                if type(first.value[i]) == List:
@@ -342,7 +356,6 @@ class List(Value):
                    return Bool(str(False)).set_context(first.context), None
            return Bool(str(True)).set_context(first.context), None
        return Bool(str(False)).set_context(first.context), None
-
        
   def multed_by(self, other):
     if isinstance(other,Number):
@@ -351,11 +364,13 @@ class List(Value):
       return new_list, None
     else:
       return None, Value.illegal_operation(self, other)
+  
   def copy(self):
     copy = List(self.elements)
     copy.set_pos(self.pos_start, self.pos_end)
     copy.set_context(self.context)
     return copy
+  
   def __str__(self):
      try:
         return ", ".join([str(x) for x in self.elements])
@@ -364,11 +379,13 @@ class List(Value):
 
   def __repr__(self):
     return f'[{", ".join([repr(x) for x in self.elements])}]'
+
 class Temp(Value):
     def __init__(self, value):
         super().__init__()
         self.value = value
         self.tempdata = []
+    
     def makeequal(self,other):
         lhs = self.value.__dict__['value']
         if type(other.value) == int or type(other.value) == str:
@@ -401,43 +418,55 @@ class Temp(Value):
                     result = interpreter.visit(data.node[i], context)
                 list+=(result.value,)
         return Temp(list)
+    
     def copy(self):
         copy = Temp(self.value)
         copy.set_pos(self.pos_start, self.pos_end)
         copy.set_context(self.context)
         return copy
+    
     def __repr__(self):
         return f'{self.value}'
+
 class Identifier(Value):
     def __init__(self, value):
         super().__init__()
         self.value = value
+    
     def makeequal(self,other):
         res = RTResult()
         value = self.context.symbol_table.set(self.value,other)
         return Identifier(self.value).set_context(self.context), None
+    
     def arrange(self,data):
         pass
+    
     def copy(self):
         copy = Temp(self.value)
         copy.set_pos(self.pos_start, self.pos_end)
         copy.set_context(self.context)
         return copy
+    
     def __repr__(self):
         return f'{self.value}'
+
 class ContainerType(Value):
     def __init__(self, value):
         super().__init__()
         self.value = value
+    
     def arrange(self):
         pass
+    
     def copy(self):
         copy = ContainerType(self.value)
         copy.set_pos(self.pos_start, self.pos_end)
         copy.set_context(self.context)
         return copy
+    
     def __repr__(self):
         return f'{self.value}'
+
 class Attribute(Value):
     def __init__(self, value,parent = None,chain = None,exter = None):
         super().__init__()
@@ -449,18 +478,18 @@ class Attribute(Value):
 
     def visit_CallNode(self,other):
         pass
+    
     def visit_VarAccessNode(self,data):
         pass
+    
     def set_grps_mod(val,name):
         mod = Module(name).set_context(val.context)
         val = val.value
         for value in val:
             mod.context.symbol_table.set(name,value)
-        return mod
-        
+        return mod    
         
     def getattr1_(self,parent,chain,i,node,context,exter= None):
-        print(88)
         res = RTResult()
         error = None
         z = None
@@ -480,7 +509,8 @@ class Attribute(Value):
         elif type(parent).__name__ == "StringNode":   #when parent is string directly
             self.parent_name = parent.tok    
         else:
-            print("UNDER DEVELOPMENT!")
+            #print("UNDER DEVELOPMENT!")
+            pass
         parent_value = i.visit(parent,context).value
         chain_name = chain.node_to_call.var_name_tok.value if type(chain).__name__ == "CallNode" else chain.var_name_tok.value
         try:
@@ -488,7 +518,7 @@ class Attribute(Value):
         except Exception as a:
             if type(parent_value).__name__ == "Function":
                 return None, RTResult().failure(Attribute_Error(parent.pos_start,chain.pos_end,a))# if GRPS FUNC
-            
+    
         try:
             z = z.copy(parent_value)
         except Exception as a:
@@ -498,7 +528,8 @@ class Attribute(Value):
             try:
                 z = parent_value.value
             except Exception as a:
-                print("Sorry ! yet under development")
+                #print("Sorry ! yet under development")
+                pass
                # return None, RTResult().failure(Attribute_Error(parent.pos_start,chain.pos_end,a))
         if type(chain).__name__ == "CallNode":
             chain_args = chain.arg_nodes
@@ -508,7 +539,7 @@ class Attribute(Value):
                     x = i.visit(chain_args[j],context)
                     
                     value = x.value
-                    error = x.error#if argument is define
+                    error = x.error #if argument is define
                     if error:
                         return None,RTResult().failure(error)
                     value = value.value  
@@ -562,22 +593,27 @@ class Attribute(Value):
         except Exception as a:
             setattr(p,"repr",f"formatted method {p.name} of {c}")
         return getattr(p,c)
+    
     def Class_attr(self,p,c): 
         x = getattr(p.value,c)
         return x
+    
     def Module_attr(self,p,c):
         x = getattr(p.value,c)
         return x
+    
     def Number_attr(self,p,c):
         try:
             return getattr(p.value,c)
         except Exception as a:
             return getattr(p,c)
+    
     def String_attr(self,p,c):
         try:
             return getattr(p.value,c)
         except Exception as a:
             return getattr(p,c)
+    
     def Function_attr(self,p,c):
         try:
             return getattr(p.value,c)
@@ -589,21 +625,26 @@ class Attribute(Value):
             return getattr(p.element,c)
         except Exception as a:
             return getattr(p,c)
+    
     def type_(self):
         return Attribute(self.value).set_context(self.context), None
+    
     def setattr_(self,parent,chain,i,node,context,exter):
         p_res = i.visit(parent,context).value if not exter  else exter
         c_res = chain.var_name_tok.value
         if exter:
             return exter
         return Attribute([p_res,c_res,context,exter])
+    
     def copy(self):
         copy = Temp(self.value)
         copy.set_pos(self.pos_start, self.pos_end)
         copy.set_context(self.context)
         return copy
+    
     def __repr__(self):
         return f"{self.value}"
+    
     def makeequal(self,other):
         p = self.value.value[0]
         c = self.value.value[1]
@@ -634,11 +675,13 @@ class String(Value):
             return String(self.value * other.value).set_context(self.context), None
         else:
             return None, Value.illegal_operation(self, other)
+    
     def get_comparison_eq(self, other):
             return Bool(str(self.value == other.value)).set_context(self.context), None
 
     def get_comparison_ne(self, other):
             return Bool(str(self.value != other.value)).set_context(self.context), None
+    
     def get_comparison_lt(self, other):
         if isinstance(other, String):
             return Bool(str(self.value < other.value)).set_context(self.context), None
@@ -669,15 +712,19 @@ class String(Value):
                 self.value = [self.value]
             self.value.append(other.value)
             return Number(self.value).set_context(self.context), None
+    
     def is_true(self):
         return len(self.value) > 0
+    
     def type_(self):
         return Class(str).set_context(self.context), None
+    
     def find_as(self):
         if isinstance(other, String):
             return String(self.value + other.value).set_context(self.context), None
         else:
             return None, Value.illegal_operation(self, other)
+    
     def copy(self):
         copy = String(self.value)
         copy.set_pos(self.pos_start, self.pos_end)
@@ -689,9 +736,8 @@ class String(Value):
 
 class Class(Value):
     def __init__(self, value):
-
         super().__init__()
-        
+
         self.value = value
         
     def copy(self):
@@ -699,10 +745,13 @@ class Class(Value):
         copy.set_pos(self.pos_start, self.pos_end)
         copy.set_context(self.context)
         return copy
+    
     def type_(self):
         return Class(type(self.value)).set_context(self.context), None
+    
     def is_true(self):
         return self.value != 0
+    
     def set_class(value):
         try:
             if type(value.value) in [int,str,list,bytes,str]:
@@ -739,6 +788,7 @@ class Class(Value):
         #return None, Value.illegal_operation(self, other)
     def __repr__(self):
         return f"GRPS OBJ {str(self.value)}"
+
 class BaseModule(Value):
   def __init__(self, name):
     super().__init__()
@@ -750,6 +800,7 @@ class BaseModule(Value):
         self.context.symbol_table = global_symbol_table
     new_context = Context(self.name, self.context, self.pos_start)
     new_context.symbol_table = SymbolTable(new_context.parent.symbol_table)
+    
     return new_context
 
 class BaseFunction(Value):
@@ -803,21 +854,3 @@ Number.true = Number(1)
 Bool.true = Bool("True")
 Bool.false = Bool("False")
 None_.null = None_("None")
-
-"""
-        lhs = self.value.__dict__['value']
-        if type(other.value) == int or type(other.value) == str:
-            return None,Value_Error(other.__dict__['pos_start'], other.__dict__['pos_end'],"not enough value to pack")
-        else:
-            rhs = other.value.__dict__['value']
-        if len(lhs) != 1 and len(lhs) > len(rhs):
-            return None,InvalidSyntaxError(lhs[0].pos_start, lhs[0].pos_end,"not enough value to pack")
-        else:
-            for i in range(len(lhs)):
-                if type(lhs[i]).__name__ != "VarAccessNode":
-                    name = type(lhs[i]).__name__
-                    return None, Value_Error(lhs[i].pos_start, lhs[i].pos_end,f"Can't assign non literal type {type(lhs[i]).__name__[:len(name)-4:]}")
-                value = self.context.symbol_table.set(lhs[i].__dict__['var_name_tok'].__dict__['value'],rhs[i])
-            return Temp(value).set_context(self.context), None
-
-"""
