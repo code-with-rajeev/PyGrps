@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* PyGRPS Design System - Modern dark theme with electric blue accents */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500&display=swap');
+
+@layer base {
+  :root {
+    /* Dark theme base colors */
+    --background: 240 12% 8%;
+    --foreground: 220 15% 95%;
+
+    /* Surface colors with subtle gradients */
+    --card: 240 10% 12%;
+    --card-foreground: 220 15% 95%;
+
+    --popover: 240 15% 10%;
+    --popover-foreground: 220 15% 95%;
+
+    /* Primary electric blue theme */
+    --primary: 217 100% 60%;
+    --primary-foreground: 220 15% 95%;
+    --primary-glow: 217 100% 70%;
+
+    /* Secondary purple accents */
+    --secondary: 260 25% 20%;
+    --secondary-foreground: 220 15% 95%;
+
+    /* Muted backgrounds */
+    --muted: 240 8% 15%;
+    --muted-foreground: 220 10% 65%;
+
+    /* Accent colors */
+    --accent: 260 60% 55%;
+    --accent-foreground: 220 15% 95%;
+
+    /* Status colors */
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 220 15% 95%;
+    
+    --success: 142 76% 55%;
+    --success-foreground: 220 15% 95%;
+
+    --warning: 45 93% 58%;
+    --warning-foreground: 240 12% 8%;
+
+    /* UI elements */
+    --border: 240 8% 18%;
+    --input: 240 10% 16%;
+    --ring: 217 100% 60%;
+
+    /* Sidebar specific */
+    --sidebar-background: 240 15% 10%;
+    --sidebar-foreground: 220 15% 85%;
+    --sidebar-primary: 217 100% 60%;
+    --sidebar-primary-foreground: 220 15% 95%;
+    --sidebar-accent: 240 10% 15%;
+    --sidebar-accent-foreground: 220 15% 85%;
+    --sidebar-border: 240 8% 18%;
+    --sidebar-ring: 217 100% 60%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(217 100% 60%), hsl(217 100% 70%));
+    --gradient-bg: linear-gradient(135deg, hsl(240 12% 8%), hsl(240 15% 10%));
+    --gradient-card: linear-gradient(135deg, hsl(240 10% 12%), hsl(240 12% 14%));
+    --gradient-glow: radial-gradient(circle at 50% 50%, hsl(217 100% 60% / 0.15), transparent 70%);
+
+    /* Shadows */
+    --shadow-glow: 0 0 30px hsl(217 100% 60% / 0.3);
+    --shadow-card: 0 8px 32px hsl(240 15% 5% / 0.4);
+    --shadow-modal: 0 25px 50px hsl(240 15% 5% / 0.6);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
