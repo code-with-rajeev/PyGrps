@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Oct  9 10:05:24 2020
-
-@author: ACER
-"""
-
 
 def representment(text, pos_start, pos_end):
     result = ''
