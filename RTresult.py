@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Oct  9 13:35:37 2020
-
-@author: ACER
-"""
-
-
 class RTResult:
   def __init__(self):
     self.reset()

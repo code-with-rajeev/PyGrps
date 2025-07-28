@@ -1,9 +1,10 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Oct  9 10:13:29 2020
+'''
+Lexer.py
 
-@author: ACER
-"""
+The lexer (tokenizer) converts the input source code string into a sequence of tokens.
+It tracks character positions for accurate error reporting and supports custom token types defined in "tokens.py".
+'''
+
 import string
 from tokenizer import Token
 from Position import Position
@@ -25,6 +26,7 @@ class Lexer:
     def advance(self):
         self.pos.advance(self.current_char)
         self.current_char = self.text[self.pos.idx] if self.pos.idx < len(self.text) else None
+
     def make_tokens(self):
         tokens = []
 

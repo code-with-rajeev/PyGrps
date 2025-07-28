@@ -1,4 +1,6 @@
-
+'''
+Defines representment of error
+'''
 def representment(text, pos_start, pos_end):
     result = ''
 

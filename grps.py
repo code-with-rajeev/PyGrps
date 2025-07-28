@@ -14,62 +14,77 @@ to_print = []
 class BaseNode:
     def __init__(self, tok):
         self.tok,self.pos_start,self.pos_end = tok,tok.pos_start,tok.pos_end  
+
 class NumberNode:
     def __init__(self, tok):
         BaseNode.__init__(self,tok)
     def __repr__(self): return f'{self.tok}'
+
 class ImportNode:
     def __init__(self, mod, get):
         self.mod,self.get,self.pos_start,self.pos_end = mod,get,mod.pos_start,mod.pos_end
     def __repr__(self): return f'{self.mod}'
+
 class BoolType:
     def __init__(self, tok):
         BaseNode.__init__(self,tok)
     def __repr__(self): return f'{self.tok}'
+
 class ClassType:
     def __init__(self, tok):
         BaseNode.__init__(self,tok)
     def __repr__(self): return f'{self.tok}'
+
 class NoneType:
     def __init__(self, tok):
         BaseNode.__init__(self,tok)
     def __repr__(self): return f'{self.tok}'
+
 class Pass_Node:
     def __init__(self, tok):
         BaseNode.__init__(self,tok)
     def __repr__(self): return f'{self.tok}'
+
 class StringNode:
     def __init__(self, tok):
         BaseNode.__init__(self,tok)
     def __repr__(self): return f'{self.tok}'
+
 class VarAccessNode:
     def __init__(self, var_name_tok):
         self.var_name_tok,self.pos_start,self.pos_end = var_name_tok,var_name_tok.pos_start,var_name_tok.pos_end
+
 class VarAssignNode:
     def __init__(self, var_name_tok, value_node):
         self.var_name_tok,self.pos_start,self.pos_end = var_name_tok,var_name_tok.pos_start, var_name_tok.pos_end
         self.value_node = value_node
+
 class BinOpNode:
     def __init__(self, left_node, op_tok, right_node):
         self.left_node,self.op_tok,self.right_node = left_node,op_tok,right_node
         self.pos_start,self.pos_end=left_node.pos_start,right_node.pos_end
     def __repr__(self): return f'({self.left_node}, {self.op_tok}, {self.right_node})'
+
 class UnaryOpNode:
     def __init__(self, op_tok, node):
         self.op_tok,self.node,self.pos_start,self.pos_end = op_tok,node,op_tok.pos_start,node.pos_end
     def __repr__(self): return f'({self.op_tok}, {self.node})'
+
 class SliceNode:
     def __init__(self,parent,start,stop,skip):
         self.parent,self.pos_start,self.pos_end,self.start,self.stop,self.skip = parent,parent.pos_start,parent.pos_end,start,stop,skip
+
 class AttributeNode:
     def __init__(self, chain, parent, type_ = None):
         self.chain,self.parent = chain,parent
         self.type_ = type_
         self.pos_start,self.pos_end = self.parent.pos_start,chain.pos_end
     def __repr__(self): return f'({self.parent}, {self.chain})'
+
 class UnPack:
     def __init__(self, op_tok, node):
         self.op_tok,self.node,self.pos_start,self.pos_end = op_tok,node,op_tok.pos_start,node.pos_end
+
 class Templist:
     def __init__(self,node= ()):
         self.node,self.pos_start,self.pos_end = node,None,None
@@ -79,20 +94,22 @@ class Templist:
         return self
     def fresh(self): self.node = ()
     def copy(self): return Templist(self.node)
+
 class IfNode:
   def __init__(self, cases, else_case):
     self.cases = cases
     self.else_case = else_case
     self.pos_start = self.cases[0][0].pos_start
     self.pos_end = (self.else_case or self.cases[len(self.cases) - 1])[0].pos_end
+
 class WhileNode:
   def __init__(self, condition_node, body_node, should_return_null):
     self.condition_node = condition_node
     self.body_node = body_node
     self.should_return_null = should_return_null
-
     self.pos_start = self.condition_node.pos_start
     self.pos_end = self.body_node.pos_end
+
 class FuncDefNode:
   def __init__(self, var_name_tok, arg_name_toks, body_node, should_auto_return):
     self.var_name_tok,self.arg_name_toks,self.body_node = var_name_tok,arg_name_toks,body_node
@@ -104,53 +121,65 @@ class FuncDefNode:
     else:
       self.pos_start = self.body_node.pos_start
     self.pos_end = self.body_node.pos_end
+
 class ClassNode:
   def __init__(self, var_name_tok, arg_name_toks, body_node):
     self.var_name_tok,self.arg_name_toks,self.body_node = var_name_tok,arg_name_toks,body_node
+
 class Container:
     def __init__(self,type_, node,start,end):
         self.type = None if not type_ else type_
         self.node = None if not node else node
         self.pos_start,self.pos_end = start,end
+
 class CallNode:
     def __init__(self, node_to_call, arg_nodes):
         self.node_to_call = node_to_call
         self.arg_nodes = arg_nodes
         self.pos_start = self.node_to_call.pos_start
         self.pos_end = self.arg_nodes[len(self.arg_nodes) - 1].pos_end if len(self.arg_nodes) > 0 else self.node_to_call.pos_end
+
 class ReturnNode:
   def __init__(self, node_to_return, pos_start, pos_end):
     self.node_to_return = node_to_return
     self.pos_start,self.pos_end = pos_start,pos_end
+
 class ListNode:
   def __init__(self, element_nodes, pos_start, pos_end):
     self.element_nodes = element_nodes
     self.pos_start,self.pos_end = pos_start,pos_end
+
 class ForNode:
   def __init__(self, var, parent, body):
     self.var = var
     self.parent,self.body = parent,body
+
 class ParseResult:
     def __init__(self):
         self.error,self.node = None,None
         self.last_registered_advance_count = 0
         self.advance_count = 0
+
     def try_register(self, res):
         if res.error:
             self.to_reverse_count = res.advance_count
             return None
         return self.register(res)
+
     def register_advancement(self):
         self.last_registered_advance_count = 1
         self.advance_count += 1
+
     def register(self, res):
         if isinstance(res, ParseResult):
             if res.error:    self.error = res.error
             return res.node
         return res
+
     def success(self, node):
         self.node = node
         return self
+
     def failure(self, error):
         if not self.error or self.last_registered_advance_count == 0:
             self.error = error
@@ -163,20 +192,25 @@ class Parser:
         self.tok_idx = -1
         self.advance()
         self.templist = Templist()
+
     def reverse(self, amount=1):
         self.tok_idx -= amount
         self.advance()
         return self.current_tok
+
     def advance(self, ):
         self.tok_idx += 1
         if self.tok_idx < len(self.tokens):
             self.current_tok = self.tokens[self.tok_idx]
         return self.current_tok
+
     def refresh(self):
         self.not_temp_node,self.list_node,self.Return_node = False,False,False
+
     def update(self,res):
         self.advance()
         res.register_advancement()
+
     def parse(self):
         res = ParseResult()
         if not self.current_tok.type == TT_EOF:
@@ -187,16 +221,19 @@ class Parser:
                     "Expected '+', '-', '*', '/', '^', '==', '!=', '<', '>', <=', '>=', 'AND' or 'OR'"
                 ))
         return res
+
     def statements(self):
         res = ParseResult()
         statements = []
         pos_start = self.current_tok.pos_start.copy()
+
         while self.current_tok.type == TT_NEWLINE:
             self.update(res)
         statement = res.register(self.statement())     
         if res.error: return res
         statements.append(statement)
         more_statements = True
+
         while True:
             newline_count = 0
             while self.current_tok.type == TT_NEWLINE :
@@ -211,15 +248,18 @@ class Parser:
                 more_statements = False
                 continue
             statements.append(statement)
+
         return res.success(ListNode(
             statements,
             pos_start,
             self.current_tok.pos_end.copy()
         ))
+
     def fun_stat(self):
         res = ParseResult()
         statements = []
         pos_start = self.current_tok.pos_start.copy()
+
         while self.current_tok.type != TT_DS:
             while self.current_tok.type == TT_NEWLINE:
                 self.update(res)
@@ -242,19 +282,23 @@ class Parser:
             pos_start,
             self.current_tok.pos_end.copy()
         ))
+
     def statement(self):
         res = ParseResult()
         pos_start = self.current_tok.pos_start.copy()
         expr = res.register(self.expr())
         if res.error: res
         return res.success(expr)
+
     def expr(self):
         res = ParseResult()
         node = res.register(self.bin_op(self.equal,(TT_EQ,)))
         if res.error: return res
         return res.success(node)
+
     def equal(self):
         return self.bin_op(self.comp_expr, ((TT_KEYWORD, 'AND'), (TT_KEYWORD, 'OR')))
+
     def comp_expr(self):
         res = ParseResult()
         if self.current_tok.matches(TT_KEYWORD, 'NOT'):
@@ -265,9 +309,7 @@ class Parser:
             node = res.register(self.comp_expr())
             if res.error: return res
             return res.success(UnaryOpNode(op_tok, node))
-        
-    #    node = res.register(self.bin_op(self.unpack,(TT_COMMA,)))
-        
+
         z =  self.unpack()
         res.register(z)
         if res.error: return res
@@ -283,12 +325,16 @@ class Parser:
                 z = self.templist.copy()
                 self.templist.fresh()
         return z
+
     def unpack(self):
         return self.bin_op(self.arith_expr, (TT_EE,TT_RS,TT_LS, TT_NE, TT_LT, TT_GT, TT_LTE, TT_GTE))
+
     def arith_expr(self):
         return  self.bin_op(self.term, (TT_PLUS, TT_MINUS))
+
     def term(self):
         return self.bin_op(self.factor,(TT_MUL, TT_DIV,TT_RD))
+
     def factor(self):
         res = ParseResult()
         tok = self.current_tok
@@ -301,8 +347,10 @@ class Parser:
 
     def power(self):
         return self.bin_op(self.attr, (TT_DOT, ))
+
     def attr(self):
         return self.bin_op(self.call, (TT_POW, ), self.factor)
+
     def call(self):
         res = ParseResult()
         atom = res.register(self.atom())
@@ -360,12 +408,14 @@ class Parser:
             self.advance()
             return res.success(SliceNode(atom,start,stop,skip ))
         return res.success(atom)
+
     def matches_error(self,name):
         if not self.current_tok.matches(TT_KEYWORD, name):
             return res.failure(InvalidSyntaxError(
                 self.current_tok.pos_start, self.current_tok.pos_end,
                 f"Expected '{name}'"
             ))
+
     def atom(self):
         res = ParseResult()
         tok = self.current_tok
@@ -450,6 +500,7 @@ class Parser:
                 tok.pos_start, tok.pos_end,
                 "expected int, float, identifier, '+', '-', '(', 'if', 'for', 'while', 'fun'"
             ))
+
     def for_expr(self):
         res = ParseResult()
 
@@ -461,8 +512,6 @@ class Parser:
 
         res.register_advancement()
         self.advance()
-        print(self.current_tok)
-
         if self.current_tok.type != TT_IDENTIFIER:
             return res.failure(InvalidSyntaxError(
                 self.current_tok.pos_start, self.current_tok.pos_end,
@@ -567,6 +616,7 @@ class Parser:
                 ))
         self.advance()
         return ClassNode(name,arg_name_tok,body)
+
     def module(self):
         res = ParseResult()
         if self.current_tok.matches(TT_KEYWORD, 'from'):
@@ -587,6 +637,7 @@ class Parser:
         return res.success(ImportNode(
         VarAccessNode(to_load) , VarAccessNode(to_get)
         ))
+
     def list_expr(self):
         res = ParseResult()
         element_nodes = []
@@ -627,6 +678,7 @@ class Parser:
           pos_start,
           self.current_tok.pos_end.copy()
         ))
+
     def if_expr(self):
         res = ParseResult()
         all_cases = res.register(self.if_expr_cases('IF'))
@@ -777,6 +829,7 @@ class Parser:
                 get_val = self.get_cont(type_)
                 right = self.expr()
                 return get_val if get_val else Container("all",get_val,pos_start,self.current_tok.pos_end)
+
     def get_cont(self,type_ = None):
         if self.current_tok.type == TT_LCUR:
             self.advance()
@@ -790,6 +843,7 @@ class Parser:
         else:
             self.advance()
             return Container("all",None,pos_start,self.current_tok.pos_end)
+
     def while_expr(self):
         res = ParseResult()
         if not self.current_tok.matches(TT_KEYWORD, 'WHILE'):
@@ -916,6 +970,7 @@ class Parser:
             body,
             False
         ))
+
     def func_def(self):
         res = ParseResult()
         if not self.current_tok.matches(TT_KEYWORD, 'fun'):
@@ -994,12 +1049,14 @@ class Parser:
         self.matches_error('END')
         res.register_advancement()
         self.advance()
+
         return res.success(FuncDefNode(
             var_name_tok,
             arg_name_toks,
             body,
             False
         ))
+
     def bin_op(self, func_a, ops, func_b=None):
         if func_b == None:
             func_b = func_a
@@ -1019,6 +1076,7 @@ class Parser:
     
 Number(Value)
 Temp(Value)
+
 class Class_(BaseFunction):
     def __init__(self, name,context = None, body_node = None, arg_names = None):
         super().__init__(Value)
@@ -1028,6 +1086,7 @@ class Class_(BaseFunction):
             self.body_node = body_node.node
         self.context = context
         self.arg_names = arg_names
+
     def execute(self,args):
         res = RTResult()
         if "__init__" in self.__dict__.keys():
@@ -1040,9 +1099,9 @@ class Class_(BaseFunction):
             return res
         setattr(self,"repr", f"< class {str(self.name)} $attr({args}) > object of grapes")
         return res.success(self) 
+
     def init(self,name,fun,args):
-        res = RTResult()
-        
+        res = RTResult()        
         interpreter = Interpreter()
         exec_ctx = self.generate_new_context()
         res.register(self.check_and_handle_args(fun.arg_names, [String(name)]+args, exec_ctx))
@@ -1056,8 +1115,10 @@ class Class_(BaseFunction):
             self.init(its,fun,args)
         except Exception as a:
             return Value_Error(fun.pos_start,fun.pos_end,f"{self.name}.{fun.name} takes 0 positional args 1 given") if len(fun.arg_names) == 0 else None
+
     def dotted_to(self,other):
         return getattr(self.value,other.var_name_tok.value)
+
     def format_(self, args,__init__ = False):
         res = RTResult()
         interpreter = Interpreter()
@@ -1072,21 +1133,27 @@ class Class_(BaseFunction):
         self.context.symbol_table.set(self.name,x)
 
         return res.success(x)
+
     def Number__node(self,x,elem,exec_ctx):
         return x
+
     def Identifier__node(self,x,elem,exec_ctx):
         setattr(x,elem.value,exec_ctx.symbol_table.get(elem.value))
         self.repr = f" {self.name}.element.value of grapes"
         return x
+
     def Function__node(self,x,elem,exec_ctx):
         setattr(x,elem.name,elem)
         return x
+
     def Function_node(self,func,args):
         setattr(self,"repr",f" {self.name}.element.name of grapes")
         return func.execute(args)
+
     def VarAccessNode_node(self,name,chain):
         setattr(self,"repr",f" {self.name}.element.name of grapes")
         return getattr(name,chain)
+
     def copy(self, repr_ = None):
         copy = repr_
         copy.set_pos(self.pos_start, self.pos_end)
@@ -1095,8 +1162,10 @@ class Class_(BaseFunction):
 
     def type_(self):
         return Class(type(self.value)).set_context(self.context), None
+
     def is_true(self):
         return self.value != 0
+
     def set_class(self,value):
         if type(value) == int:
             return Number(value)
@@ -1106,6 +1175,7 @@ class Class_(BaseFunction):
             return List(value)
         else:
             return Class(value)
+
     def get_comparison_eq(self, other):
         if isinstance(other, Class):
             try:
@@ -1116,6 +1186,7 @@ class Class_(BaseFunction):
             return None, Value.illegal_operation(self, other)
     def __repr__(self):
         return self.repr 
+
 class Function(BaseFunction):
   def __init__(self, name, body_node, arg_names, should_auto_return):
     super().__init__(name)
@@ -1123,6 +1194,7 @@ class Function(BaseFunction):
     self.repr = f"<bound function {self.name} of gprs>"
     self.arg_names = arg_names
     self.should_auto_return = should_auto_return
+
   def GRSP_fun():
       pass
       
@@ -1137,8 +1209,10 @@ class Function(BaseFunction):
     if res.should_return() and res.func_return_value == None: return res
     ret_value = (value if self.should_auto_return else None) or res.func_return_value or None_.null
     return res.success(ret_value)
+
   def get_comparison_eq(self, other):
       return Bool(str(self.value == other.value)).set_context(self.context), None
+
   def copy(self,z = None):
     copy = Function(self.name, self.body_node, self.arg_names, self.should_auto_return)
     if z:
@@ -1147,8 +1221,10 @@ class Function(BaseFunction):
     copy.set_context(self.context)
     copy.set_pos(self.pos_start, self.pos_end)
     return copy
+
   def type_(self):
       return Class(type(Function.GRSP_fun)).set_context(self.context), None
+
   def __repr__(self):
     return self.repr
 
@@ -1180,21 +1256,25 @@ class Interpreter:
         return RTResult().success(
             (value).set_context(context).set_pos(node.pos_start, node.pos_end)
             )
+
     def visit_Pass_Node(self, node, context):
         return RTResult().success(
             Number.null.set_pos(node.pos_start, node.pos_end)
         )
+
     def visit_Container(self,node, context):
         x = ContainerType(node)
         x.arrange()
         return RTResult().success(
             x.set_context(context).set_pos(node.pos_start, node.pos_end)
         )
+
     def visit_NumberNode(self, node, context):
         x = Number(node.tok.value)
         return RTResult().success(
             x.set_context(context).set_pos(node.pos_start, node.pos_end)
         )
+
     def visit_AttributeNode(self, node, context,exter = None):
         res = RTResult()
         class_ = Class(None)
@@ -1216,11 +1296,13 @@ class Interpreter:
             return RTResult().success(
                     Attribute(value,parent,chain,exter).set_context(context).set_pos(node.pos_start, node.pos_end)
                      )
+
     def visit_BoolType(self, node, context):
         x = Bool(node.tok.value)
         return RTResult().success(
             x.set_context(context).set_pos(node.pos_start, node.pos_end)
         )
+
     def visit_ClassType(self, node, context):
         x = Class(node.tok.value)
         if x.value == "int":
@@ -1242,11 +1324,13 @@ class Interpreter:
         return RTResult().success(
             Class(value).set_context(context).set_pos(node.pos_start, node.pos_end)
         )
+
     def visit_NoneType(self, node, context):
         x = None_(node.tok.value)
         return RTResult().success(
             None_("None").set_context(context).set_pos(node.pos_start, node.pos_end)
         )
+
     def visit_ReturnNode(self, node, context,exter = None):
         res = RTResult()
         if node.node_to_return:
@@ -1254,10 +1338,12 @@ class Interpreter:
            return res.success_return(value)
         else:
            return res.success(None_.null)
+
     def visit_StringNode(self, node, context):
         return RTResult().success(
             String(node.tok.value).set_context(context).set_pos(node.pos_start, node.pos_end)
         )
+
     def visit_Templist(self, node, context, type_ = None): 
         x = Temp(node)
 
@@ -1269,6 +1355,7 @@ class Interpreter:
         return RTResult().success(
             y.set_context(context).set_pos(node.pos_start, node.pos_end)
         )
+
     def visit_VarAccessNode(self, node, context,type_= None):
         res = RTResult()
         if type_:
@@ -1285,6 +1372,7 @@ class Interpreter:
                 context
             ))
         return res.success(value)
+
     def visit_VarAssignNode(self, node, context):
         res = RTResult()
         var_name = node.var_name_tok.value
@@ -1351,6 +1439,7 @@ class Interpreter:
             return res.failure(error)
         else:
             return res.success(result.set_pos(node.pos_start, node.pos_end))
+
     def visit_UnaryOpNode(self, node, context):
         res = RTResult()
         number = res.register(self.visit(node.node, context))
@@ -1364,6 +1453,7 @@ class Interpreter:
             return res.failure(error)
         else:
             return res.success(number.set_pos(node.pos_start, node.pos_end))
+
     def visit_IfNode(self, node, context):
         res = RTResult()
         for condition, expr, should_return_null in node.cases:
@@ -1379,6 +1469,7 @@ class Interpreter:
             if res.should_return(): return res
             return res.success(Number.null if should_return_null else expr_value)
         return res.success(Number.null)
+
     def visit_ListNode(self, node, context,init = None):
         res = RTResult()
         elements = []
@@ -1390,6 +1481,7 @@ class Interpreter:
         return res.success(
             List(elements).set_context(context).set_pos(node.pos_start, node.pos_end)
         )
+
     def visit_ForNode(self, node, context):
         res = RTResult()
         var = node.var.value
@@ -1414,6 +1506,7 @@ class Interpreter:
         return res.success(
             Number.null
             )
+
     def form(self,value):
         if type(value) == str:
             print("yes")
@@ -1424,6 +1517,7 @@ class Interpreter:
             value = List(value)
         return value
         
+
     def visit_ClassNode(self, node, context):
         res = RTResult()
         class_name = node.var_name_tok.value if node.var_name_tok else None
@@ -1432,6 +1526,7 @@ class Interpreter:
         class_value = Class_(class_name,context, body_node, arg_names).set_context(context)
         class_value.format_(arg_names)
         return res.success(class_value)
+
     def visit_WhileNode(self, node, context):
         res = RTResult()
         elements = []
@@ -1451,6 +1546,7 @@ class Interpreter:
             Number.null if node.should_return_null else
             List(elements).set_context(context).set_pos(node.pos_start, node.pos_end)
         )
+
     def visit_FuncDefNode(self, node, context):
         res = RTResult()
         func_name = node.var_name_tok.value if node.var_name_tok else None
@@ -1460,6 +1556,7 @@ class Interpreter:
         if node.var_name_tok:
             context.symbol_table.set(func_name, func_value)
         return res.success(func_value)
+
     def visit_CallNode(self, node, context,exter = None):
 
         global to_print
@@ -1491,24 +1588,30 @@ class Interpreter:
         return_value = return_value.copy(return_value) if type(return_value).__name__ == "Class_" else return_value.copy()
         return_value = return_value.set_pos(node.pos_start, node.pos_end).set_context(context)
         return res.success(return_value)
+
     def py_fun(self,fun,args):
         pass
+
     def visit_ImportNode(self,mod,context):
         res = RTResult()
         value_to_call = res.register(self.visit(mod.mod, context))
         return_value = res.register(value_to_call.x(mod.get))
         context.symbol_table.set(mod.get.var_name_tok.value,Module(return_value))
         return res.success(Module(return_value))
+
     def visit_Class_(self,node,context): return node
+
     def BinOpNode_name(self,obj,exter,context):
         value = self.visit(obj,context,exter).value
         name,val = getattr(self,f"{type(obj.left_node).__name__}_name")(obj.left_node)
         name = obj.left_node.parent.var_name_tok.value
         return name,value
+
     def VarAccessNode_name(self,obj,exter,context):
         name = obj.var_name_tok.value
         value = self.visit(exter,context)
         return name,value
+
     def AttributeNode_name(self,obj,exter = None,context = None):
         name = obj.parent.var_name_tok.value
 
@@ -1517,6 +1620,7 @@ class Interpreter:
 class BuiltInFunction(BaseFunction):
   def __init__(self, name):
     super().__init__(name)
+
   def execute(self, args):
     res = RTResult()
     exec_ctx = self.generate_new_context()
@@ -1530,8 +1634,10 @@ class BuiltInFunction(BaseFunction):
         return_value = res.register(method(exec_ctx))
     if res.should_return(): return res
     return res.success(return_value)
+
   def no_visit_method(self, node, context):
     raise Exception(f'No execute_{self.name} method defined')
+
   def copy(self):
     copy = BuiltInFunction(self.name)
     copy.set_context(self.context)
@@ -1539,6 +1645,7 @@ class BuiltInFunction(BaseFunction):
     return copy
 
   def __repr__(self): return f"<built-in function {self.name}>"
+
   def execute_print(self, exec_ctx):
     global to_print
    # print("value is ",exec_ctx.symbol_table.get('value'))
@@ -1549,50 +1656,71 @@ class BuiltInFunction(BaseFunction):
     print(f">>  {str(repr(exec_ctx.symbol_table.get('value')))}")
     return RTResult().success(Number.null)
   execute_print.arg_names = ['value']
+
   def execute_print_ret(self, exec_ctx): pass
   execute_print_ret.arg_names = ['value']
+
   def execute_is_num(self, exec_ctx): pass
   execute_is_num.arg_names = ["value"]
+
   def execute_is_str(self, exec_ctx): pass
   execute_is_str.arg_names = ["value"]
+
   def execute_Input(self, exec_ctx): 
       print(">>",end = " ")
   execute_Input.arg_names = ["value"]
+
   def execute_ord(self, exec_ctx): pass
   execute_ord.arg_names = ["value"]
+
   def execute___all__(self, exec_ctx): pass
   execute___all__.arg_names = ["value"]
+
   def execute_bool(self, exec_ctx): pass
   execute_bool.arg_names = ["value"]
+
   def execute_is_bool(self, exec_ctx): pass
   execute_is_bool.arg_names = ["value"]
+
   def execute_chr(self, exec_ctx): pass
   execute_chr.arg_names = ["value"]
+
   def execute_is_list(self, exec_ctx): pass
   execute_is_list.arg_names = ["value"]
+
   def execute_is_fun(self, exec_ctx): pass
   execute_is_fun.arg_names = ["value"]
+
   def execute_abs(self, exec_ctx): pass
   execute_abs.arg_names = ["value"]
+
   def execute_iter(self, exec_ctx): pass
   execute_iter.arg_names = ['value']
+
   def execute_ln(self, exec_ctx): pass
   execute_ln.arg_names = ["list"]
+
   def execute_type(self, exec_ctx): pass
   execute_type.arg_names = ["value"] 
+
   def execute_open(self, exec_ctx): pass
   execute_open.arg_names = ["value"] 
+
   def execute_range(self, exec_ctx): pass
   execute_range.arg_names = ["start","stop"]
   
 class BuiltInModule(BaseModule):
+
   def __init__(self, name): super().__init__(name)
+
   def no_visit_method(self, node, context): raise Exception(f'No execute_{self.name} method defined')
+
   def copy(self):
     copy = BuiltInModule(self.name)
     copy.set_context(self.context)
     copy.set_pos(self.pos_start, self.pos_end)
     return copy
+
   def x(self,get):
       try:
           from importlib import import_module as a
@@ -1608,6 +1736,7 @@ class BuiltInModule(BaseModule):
                   return RTResult().success(x)
           except Exception as a:
               return RTResult().success(Number(f"{a} \n Grapes/Python has no module named \"{get.var_name_tok.value}\""))
+
   def __repr__(self):
     return f"<built-in Module {self.name}>"
 
@@ -1698,14 +1827,15 @@ def start_normal(dir_ = None,file = "untitled",text = None):
         START,END = 0,0
 
 def start_GUI(dir_ = None,file = "untitled",text = None):
-        print(f"running....  file_name = {file}.grps \nat wdir = {dir_}")
+        print(f"Running Script: {file}.grps \nat wdir = {dir_}")
         result , error = run(file,text)
         if error:
             return  None, f"\n {error.show_error()} \n"
         else:
             return to_print,f"\nsuccess \n  completed in "
+
 def all_():
     return global_symbol_table.view()
-
+print
 if __name__ == "__main__":
     start_normal()

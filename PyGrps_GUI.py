@@ -1,3 +1,11 @@
+'''
+Grapes GUI Interface
+
+Provides a Tkinter-based local interface to write, run, and test code written in the custom Grapes programming language.
+File extention: .grps
+
+'''
+
 import time
 from tkinter import *
 from tkinter import simpledialog, filedialog, messagebox

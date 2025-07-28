@@ -1,3 +1,10 @@
+'''
+Global Symbol Table
+
+Implements a symbol table to store and retrieve variables, functions, and constants during
+program execution, acting as the memory map of the interpreter.
+'''
+
 class SymbolTable:
     def __init__(self, parent=None):
         self.symbols = {}
